@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +28,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::resource('/contacts', ContactController::class);
+
+    Route::post('/images', [ImageController::class, 'storeContactAvatar'])->name('images.store');
+    Route::delete('/images/{image}', [ImageController::class, 'deleteAvatar'])->name('images.delete');
+    Route::get('contacts-export', [ContactController::class, 'export'])->name('contacts.export');
+
 });
 
 require __DIR__.'/auth.php';
